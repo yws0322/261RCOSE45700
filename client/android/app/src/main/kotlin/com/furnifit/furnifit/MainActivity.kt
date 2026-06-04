@@ -1,4 +1,4 @@
-package com.furni3d.furni3d
+package com.furnifit.furnifit
 
 import io.flutter.embedding.android.FlutterActivity
 
