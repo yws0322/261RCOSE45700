@@ -1,38 +1,70 @@
-# 20261R0136COSE45700
+# furniFit
 
-이 리포지토리는 프로젝트의 프론트엔드와 백엔드 소스코드를 함께 관리하는 모노레포(Monorepo)입니다.
+가구 사진 한 장으로 3D 모델을 생성하고 AR로 공간에 배치해보는 iOS 앱입니다.  
+VARCO 3D AI 엔진을 활용해 사진 업로드 → 3D 변환 → AR 공간 배치까지 원스톱으로 제공합니다.
+
+## 주요 기능
+
+- **3D 변환** — 가구 사진을 업로드하면 VARCO 3D가 GLB 모델 자동 생성
+- **AR 공간 배치** — ARKit 기반으로 실제 공간에 여러 모델을 동시에 배치
+- **갤러리** — 생성된 모델 검색·관리 (한국어 퍼지 검색 지원)
+- **멀티뷰 업로드** — 단일 이미지 또는 다각도 이미지로 정밀도 향상
+- **Color Grading** — 실제 조명 환경에 맞춘 색상 보정
+
+## 기술 스택
+
+| 파트 | 기술 |
+|------|------|
+| 클라이언트 | Flutter 3.x (iOS / Android) |
+| AR | ARKit (iOS), arkit_plugin vendored fork |
+| 3D 뷰어 | model_viewer_plus |
+| AI 엔진 | VARCO 3D (KT) |
+| 서버 | `server/` 참고 |
 
 ## 📂 폴더 구조
 
-프로젝트는 크게 프론트엔드와 백엔드 두 가지 파트로 나뉘어 있습니다.
+```
+261RCOSE45700/
+├── client/   # Flutter 앱 (iOS / Android)
+└── server/   # 백엔드 API 서버
+```
 
-- `client/` : 프론트엔드 팀 작업 공간 (사용자 인터페이스 및 클라이언트 로직)
-- `server/` : 백엔드 팀 작업 공간 (서버, 데이터베이스, 3D 모델링, API 로직)
+## 시작하기
 
-## 시작하기 (Getting Started)
+### 클라이언트 실행
 
-각 폴더로 이동하여 필요한 패키지를 설치하고 개발 서버를 실행해 주세요.
-(자세한 실행 방법은 각 폴더 내의 README를 확인하거나 담당 파트의 팀원에게 문의해 주세요.)
-
-### 프론트엔드 (Frontend) 실행
 ```bash
 cd client
-# [여기에 프론트엔드 패키지 설치 명령어 작성, 예: npm install]
-# [여기에 프론트엔드 실행 명령어 작성, 예: npm run dev]
+flutter pub get
+flutter run
 ```
 
-### 백엔드 (Backend) 실행
+> Flutter 3.x 이상 필요. iOS 빌드는 Xcode 및 CocoaPods 설치 필요.
+
+```bash
+# iOS CocoaPods 설치 (최초 1회)
+cd client/ios && pod install
+```
+
+### 서버 실행
+
 ```bash
 cd server
-# [여기에 백엔드 패키지 설치/빌드 명령어 작성, 예: ./gradlew build]
-# [여기에 백엔드 실행 명령어 작성, 예: ./gradlew bootRun]
+# server/README.md 참고
 ```
 
-## 팀 규칙
+## 환경 변수
 
-원활한 협업을 위해 다음 규칙을 지켜주세요.
+`client/lib/config.dart` 에서 API 서버 주소를 설정합니다.
 
-### 브랜치 전략 (Branch Strategy)
-* `main`: 배포 가능한 안정적인 코드가 모이는 브랜치입니다.
-* `client/feat/...`: 프론트엔드 기능 개발 브랜치입니다.
-* `server/feat/...`: 백엔드 기능 개발 브랜치입니다.
+```dart
+const String apiBaseUrl = 'https://your-api-server.com';
+```
+
+## 브랜치 전략
+
+| 브랜치 | 용도 |
+|--------|------|
+| `main` | 배포 가능한 안정 코드 |
+| `client/feat/...` | 클라이언트 기능 개발 |
+| `server/feat/...` | 서버 기능 개발 |
